@@ -1,38 +1,33 @@
 # Solana Transaction Timezone Tracker
 
-A tool that logs all outgoing transactions for a list of Solana wallet/s. This allows you to track the activity and chart the time of day of transactions. Hopefully, this will be a simple way to identify the timezone of a wallet, and potentially develop a further answer to confirm the timezone of a wallet. 
+A tool that logs outgoing transactions from Solana wallets and visualizes their activity patterns by hour. Useful for analyzing wallet activity patterns and potentially identifying user timezones.
 
-Features include:
-- Multi-wallet support
-- Parallel transaction processing
-- Hourly activity visualization
+## Features
+- Multi-wallet tracking
+- Activity visualization by hour
 - Transaction amount tracking
 - Configurable RPC settings
+- Duplicate transaction handling
+- Rate limit management
 
-## Quick Start
+## Setup
 
-1. **Clone the Repository**
+1. **Install Requirements**
    ```bash
-   git clone https://github.com/yourusername/solana-transaction-tracker
-   cd solana-transaction-tracker
+   pip install aiohttp pandas matplotlib tqdm
    ```
 
-2. **Set Up Python Environment**
-   - Requires Python 3.7+
-   - Install required packages:
-     ```bash
-     pip install requests pandas matplotlib tqdm aiohttp
-     ```
-
-3. **Configure Settings**
-   - Copy `config.template.py` to `config.py`:
-     ```bash
-     cp config.template.py config.py
-     ```
-   - Edit `config.py` with your settings:
-     - Add your RPC URL (get one from [helius.dev](https://helius.dev) or another provider)
-     - Add your wallet addresses
-     - Adjust RPC settings if needed
+2. **Configure Settings**
+   - Copy `config.template.py` to `config.py`
+   - Add your RPC URL (get one from [helius.dev](https://helius.dev))
+   - Add wallet addresses to track
+   ```python
+   RPC_URL = "YOUR_RPC_URL"
+   WALLET_ADDRESSES = [
+       "wallet1",
+       "wallet2"
+   ]
+   ```
 
 ## Usage
 
@@ -40,73 +35,35 @@ Features include:
    ```bash
    python index.py
    ```
-   This will:
-   - Download transactions for all configured wallets
-   - Filter for outgoing transfers
-   - Save results to `filtered_transactions.json`
+   - Downloads and filters outgoing transactions
+   - Saves to `filtered_transactions.json`
 
-2. **View Transaction Charts**
+2. **Generate Chart**
    ```bash
    python chart_transactions.py
    ```
-   Creates a visualization showing:
-   - Transaction activity by hour
-   - Different colors for each wallet
-   - Inactive periods in gray
-   - Average transaction line
-   - Transaction counts on bars
-
-## Configuration Options
-
-In `config.py`:
-```python
-RPC_URL = "YOUR_RPC_URL"  # Your RPC endpoint
-WALLET_ADDRESSES = [       # List of wallets to track
-    "address1",
-    "address2"
-]
-REQUEST_DELAY = 0.05      # Delay between requests
-RETRY_DELAY = 1          # Retry delay when rate limited
-MAX_RETRIES = 5         # Max retries per request
-```
-
-### RPC Settings Guide
-- **Public RPCs**: Use higher delays (0.5-1.0 seconds)
-- **Private RPCs**: Can use lower delays (0.05-0.1 seconds)
-- Adjust based on your RPC provider's rate limits
+   - Creates `transaction_activity.png`
+   - Shows hourly transaction patterns
+   - Different colors per wallet
+   - Includes inactive hours and averages
 
 ## Output Files
+- `filtered_transactions.json`: Transaction data
+- `transaction_activity.png`: Activity visualization
 
-1. **filtered_transactions.json**
-   - Contains all outgoing transfers
-   - Fields:
-     - `receiver_address`: Recipient wallet
-     - `sending_address`: Sender wallet
-     - `sending_amount`: Amount in SOL
-     - `time_sent`: Transaction timestamp
+## Performance Tuning
 
-2. **transaction_activity.png**
-   - Visual chart of transaction activity
-   - Shows hourly distribution
-   - Multi-wallet color coding
-   - Average transaction line
+Default settings in `config.py` work with Helius free tier. Adjust if needed:
 
-## Troubleshooting
+```python
+# Slower but reliable (free RPCs)
+REQUEST_DELAY = 1.0
+MAX_CONCURRENT_REQUESTS = 5
 
-1. **Rate Limits**
-   - Increase `REQUEST_DELAY` in config.py
-   - Use a private RPC endpoint
-   - Reduce number of concurrent requests
-
-2. **Performance**
-   - Adjust `batch_size` in index.py
-   - Modify `MAX_RETRIES` for stability
-   - Use SSD for faster file operations
-
-## Contributing
-
-Contributions are welcome! I know the code is not perfect, but it works.
+# Faster (paid RPCs)
+REQUEST_DELAY = 0.1
+MAX_CONCURRENT_REQUESTS = 25
+```
 
 ## License
-
-This project is licensed under the MIT License - see the LICENSE file for details. 
+MIT License 
