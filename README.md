@@ -2,6 +2,15 @@
 
 A tool that logs outgoing transactions from Solana wallets and visualizes their activity patterns by hour. Useful for analyzing wallet activity patterns and potentially identifying user timezones.
 
+Single wallet example:
+![8zZ](https://github.com/user-attachments/assets/6873051b-d1fa-4197-8103-1101fd929885)
+
+Comparing relationships between wallets example:
+![C3R](https://github.com/user-attachments/assets/bcb09b13-eab7-42ca-b31f-265ad77684d2)
+
+Mutli wallet support example:
+<img width="1122" alt="multi" src="https://github.com/user-attachments/assets/9072f8be-7989-4759-8d04-23413b4ef2a1" />
+
 ## Features
 - Multi-wallet tracking
 - Activity visualization by hour
