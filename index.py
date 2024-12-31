@@ -284,7 +284,7 @@ def main():
     if hasattr(asyncio, 'WindowsSelectorEventLoopPolicy'):
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     
-    # Run with increased limits
+    # Run
     asyncio.run(main_async())
 
 if __name__ == "__main__":
